@@ -1,0 +1,76 @@
+{
+  "table": [
+    {
+      "id": 0,
+      "data": [
+        4,
+        0
+      ],
+      "label": "Jérôme: ménage"
+    },
+    {
+      "id": 1,
+      "data": [
+        0,
+        0
+      ],
+      "label": "Jérôme: sexe"
+    },
+    {
+      "id": 2,
+      "data": [
+        1,
+        5
+      ],
+      "label": "Jérôme: activités"
+    },
+    {
+      "id": 3,
+      "data": [
+        0,
+        9
+      ],
+      "label": "Sarah: ménage"
+    },
+    {
+      "id": 4,
+      "data": [
+        0,
+        8
+      ],
+      "label": "Sarah: sexe"
+    },
+    {
+      "id": 5,
+      "data": [
+        0,
+        8
+      ],
+      "label": "Sarah: activités"
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "label": "activités"
+    },
+    {
+      "id": 2,
+      "label": "sexe"
+    },
+    {
+      "id": 3,
+      "label": "ménage"
+    }
+  ],
+  "month" : [
+    {
+      "id": 1,
+      "name": "Septembre"
+    },
+    {
+      "id": 2,
+      "name": "Octobre"
+    }
+  ]
+}
