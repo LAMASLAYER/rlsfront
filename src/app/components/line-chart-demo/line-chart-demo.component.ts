@@ -27,21 +27,31 @@ export class LineChartDemoComponent implements OnInit {
         this.labels = data;
       }
     );
-    this.getMonth().subscribe()
+    this.getMonth().subscribe();
+    this.loadActivity().subscribe(
+      data => {
+        const ids = [];
+        const temp = Object.keys(data);
+        for (let i = 0; i < temp.length; i++) {
+          ids.push(data[i]['reasonId']);
+        }
+      }
+    );
   }
 
   private getData() {
-   return this.http.get('http://localhost:3100/table');
+   return this.http.get('http://localhost:3000/table');
   }
 
   private getLabels() {
-    return this.http.get('http://localhost:3100/categories');
+    return this.http.get('http://localhost:3000/categories');
   }
 
   private getMonth() {
-    return this.http.get('http://localhost:3100/month');
+    return this.http.get('http://localhost:3000/month');
   }
 
+  public activity: Object;
   public labels: Object;
   public users: Object;
   public lineChartData: Object;
@@ -52,7 +62,7 @@ export class LineChartDemoComponent implements OnInit {
   public lineChartColors: Array<any> = [
     { // grey
       backgroundColor: 'rgba(148,159,177,0.2)',
-      borderColor: 'rgba(148,159,177,1)',
+      borderColor: 'rgba(0,0,255,1)',
       pointBackgroundColor: 'rgba(148,159,177,1)',
       pointBorderColor: '#fff',
       pointHoverBackgroundColor: '#fff',
@@ -60,7 +70,7 @@ export class LineChartDemoComponent implements OnInit {
     },
     { // dark grey
       backgroundColor: 'rgba(77,83,96,0.2)',
-      borderColor: 'rgba(77,83,96,1)',
+      borderColor: 'rgba(0,0,255,1)',
       pointBackgroundColor: 'rgba(77,83,96,1)',
       pointBorderColor: '#fff',
       pointHoverBackgroundColor: '#fff',
@@ -68,14 +78,14 @@ export class LineChartDemoComponent implements OnInit {
     },
     { // grey
       backgroundColor: 'rgba(148,159,177,0.2)',
-      borderColor: 'rgba(148,159,177,1)',
+      borderColor: 'rgba(0,0,255,1)',
       pointBackgroundColor: 'rgba(148,159,177,1)',
       pointBorderColor: '#fff',
       pointHoverBackgroundColor: '#fff',
       pointHoverBorderColor: 'rgba(148,159,177,0.8)'
     },    { // grey
       backgroundColor: 'rgba(148,159,177,0.2)',
-      borderColor: 'rgba(148,159,177,1)',
+      borderColor: 'rgba(255,192,203 ,1 )',
       pointBackgroundColor: 'rgba(148,159,177,1)',
       pointBorderColor: '#fff',
       pointHoverBackgroundColor: '#fff',
@@ -83,7 +93,7 @@ export class LineChartDemoComponent implements OnInit {
     },
     { // dark grey
       backgroundColor: 'rgba(77,83,96,0.2)',
-      borderColor: 'rgba(77,83,96,1)',
+      borderColor: 'rgba(255,192,203 ,1 )',
       pointBackgroundColor: 'rgba(77,83,96,1)',
       pointBorderColor: '#fff',
       pointHoverBackgroundColor: '#fff',
@@ -91,7 +101,7 @@ export class LineChartDemoComponent implements OnInit {
     },
     { // grey
       backgroundColor: 'rgba(148,159,177,0.2)',
-      borderColor: 'rgba(148,159,177,1)',
+      borderColor: 'rgba(255,192,203 ,1 )',
       pointBackgroundColor: 'rgba(148,159,177,1)',
       pointBorderColor: '#fff',
       pointHoverBackgroundColor: '#fff',
@@ -111,13 +121,11 @@ export class LineChartDemoComponent implements OnInit {
     console.log(e);
   }
 
-  public plusOne(event: any) {
-    const target = event.target || event.srcElement || event.currentTarget;
-    const idAttr = target.attributes.id;
-    const value = idAttr.nodeValue;
+  public plusOne(id) {
+    const value = id;
     const newData = this.lineChartData;
     newData[value.substr(0, 1)]['data'][value.substr(1, 1)] = newData[value.substr(0, 1)]['data'][value.substr(1, 1)] + 1;
-    return this.http.put('http://localhost:3100/table/' + value.substr(0, 1), newData[value.substr(0, 1)]).subscribe(
+    return this.http.put('http://localhost:3000/table/' + value.substr(0, 1), newData[value.substr(0, 1)]).subscribe(
       res => {
         this.getData().subscribe(
           data => {
@@ -128,15 +136,12 @@ export class LineChartDemoComponent implements OnInit {
     );
   }
 
-  public minusOne(event: any) {
-    const target = event.target || event.srcElement || event.currentTarget;
-    const idAttr = target.attributes.id;
-    const value = idAttr.nodeValue;
+  public minusOne(id) {
+    const value = id;
     const newData = this.lineChartData;
-    console.log(newData[value.substr(0, 1)]);
-    if (value.substr(1, 1) > 0) {
+    console.log(value);
       newData[value.substr(0, 1)]['data'][value.substr(1, 1)] = newData[value.substr(0, 1)]['data'][value.substr(1, 1)] - 1;
-      return this.http.put('http://localhost:3100/table/' + value.substr(0, 1), newData[value.substr(0, 1)]).subscribe(
+      return this.http.put('http://localhost:3000/table/' + value.substr(0, 1), newData[value.substr(0, 1)]).subscribe(
         res => {
           this.getData().subscribe(
             data => {
@@ -145,7 +150,6 @@ export class LineChartDemoComponent implements OnInit {
           );
         }
       );
-    }
   }
 
   public newCategory: string;
@@ -161,7 +165,7 @@ export class LineChartDemoComponent implements OnInit {
     for (let i = 0; i < this.lineChartLabels.length; i++) {
       newCategory['data'].push(0);
     }
-    return this.http.post('http://localhost:3100/table', newCategory).subscribe(
+    return this.http.post('http://localhost:3000/table', newCategory).subscribe(
       res => {
         this.getData().subscribe(
           data => {
@@ -174,7 +178,7 @@ export class LineChartDemoComponent implements OnInit {
   }
 
   public deleteCategory(id) {
-    return this.http.delete('http://localhost:3100/table/' + id).subscribe(
+    return this.http.delete('http://localhost:3000/table/' + id).subscribe(
       res => {
         this.getData().subscribe(
           data => {
@@ -184,4 +188,40 @@ export class LineChartDemoComponent implements OnInit {
       }
     );
   }
+
+  public reasons: Object;
+  public tempId: any;
+
+  public setTempId(event) {
+    const target = event.target || event.srcElement || event.currentTarget;
+    const idAttr = target.attributes.id;
+    this.tempId = idAttr.nodeValue;
+  }
+
+  public loadReasons() {
+
+    return this.http.get('http://localhost:3000/reasons').subscribe(
+      res => {
+        this.reasons = res;
+      }
+    );
+  }
+
+  public newReason: Object;
+
+  public addReason(newReason) {
+    newReason = { 'name' : this.newReason };
+    console.log(newReason);
+    return this.http.post('http://localhost:3000/reasons', newReason).subscribe(
+      res => {
+        this.loadReasons();
+      }
+    );
+  }
+
+  public loadActivity() {
+    return this.http.get('http://localhost:3000/activity');
+  }
+
 }
+

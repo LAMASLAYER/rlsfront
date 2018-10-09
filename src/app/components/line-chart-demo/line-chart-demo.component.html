@@ -22,9 +22,74 @@
       <tr *ngFor="let d of lineChartData">
         <button (click)="deleteCategory(d.id)" class="btn btn-primary">X</button>
         <td>{{d.label}}</td>
-        <td *ngFor="let label of lineChartLabels; let j=index">{{d && d.data[j]}}<button [id]="d.id+''+j" (click)="minusOne($event)">-</button><button  [id]="d.id+''+j" (click)="plusOne($event)">+</button></td>
+        <td *ngFor="let label of lineChartLabels; let j=index">{{d && d.data[j]}}<button [id]="d.id+''+j" data-toggle="modal" data-target="#exampleModal" (click)="loadReasons();setTempId($event)">-</button><button data-toggle="modal" data-target="#exampleModal2" [id]="d.id+''+j" (click)="loadReasons();setTempId($event)">+</button></td>
       </tr>
     </table>
     <input (input)="newCategory=$event.target.value"/><br/><button class="btn btn-primary" (click)="addCategory()">Ajouter catégorie</button>
+    <table class="table table-responsive table-condensed">
+      <tr>
+        <th>Activité</th>
+        <th>Raison</th>
+        <th>Auteur</th>
+      </tr>
+      <tr *ngFor="let a of displayedActivity">
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </table>
+  </div>
+  <div class="col-md-6" style="margin-bottom: 10px">
+
+  </div>
+</div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Choisir une raison</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <select *ngIf="reasons != null">
+          <option *ngFor="let r of reasons">{{r.name}}</option>
+        </select>
+        <br/>
+        <input (input)="newReason=$event.target.value"/><br/><button class="btn btn-primary" (click)="addReason()">Ajouter Raison</button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="minusOne(tempId)" data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel2">Choisir une raison</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <select *ngIf="reasons != null">
+          <option *ngFor="let r of reasons">{{r.name}}</option>
+        </select>
+        <br/>
+        <input (input)="newReason=$event.target.value"/><br/><button class="btn btn-primary" (click)="addReason(newReason)">Ajouter Raison</button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="plusOne(tempId)" data-dismiss="modal">Ok</button>
+      </div>
+    </div>
   </div>
 </div>

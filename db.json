@@ -4,7 +4,7 @@
       "id": 0,
       "data": [
         4,
-        0
+        1
       ],
       "label": "Jérôme: ménage"
     },
@@ -63,7 +63,7 @@
       "label": "ménage"
     }
   ],
-  "month" : [
+  "month": [
     {
       "id": 1,
       "name": "Septembre"
@@ -71,6 +71,38 @@
     {
       "id": 2,
       "name": "Octobre"
+    }
+  ],
+  "reasons": [
+    {
+      "id": 1,
+      "name": "Linge rangé"
+    },
+    {
+      "name": "pomme de terre",
+      "id": 2
+    },
+    {
+      "name": "Bouton sur le cul",
+      "id": 3
+    },
+    {
+      "name": "Super bon rapport",
+      "id": 4
+    }
+  ],
+  "activity": [
+    {
+      "id": 1,
+      "type": "+",
+      "author": "Sarah",
+      "reasonId": 1
+    },
+    {
+      "id": 2,
+      "type": "+",
+      "author": "Sarah",
+      "reasonId": 1
     }
   ]
 }
