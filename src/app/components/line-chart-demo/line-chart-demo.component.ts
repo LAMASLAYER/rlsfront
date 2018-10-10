@@ -9,7 +9,7 @@ import {endWith} from 'rxjs/operators';
 export class LineChartDemoComponent implements OnInit {
   // lineChart
 
-  private date: Date;
+  public date: string;
   private http: HttpClient;
 
   constructor(http: HttpClient) {
@@ -27,17 +27,44 @@ export class LineChartDemoComponent implements OnInit {
         this.labels = data;
       }
     );
-    this.getMonth().subscribe();
-    this.loadActivity().subscribe(
+    this.date = new Date().toString().substr(4, 3);
+    this.user = 'Jérôme';
+    this.getMonth().subscribe(
       data => {
-        const ids = [];
-        const temp = Object.keys(data);
-        for (let i = 0; i < temp.length; i++) {
-          ids.push(data[i]['reasonId']);
+        this.months = data;
+      }
+    );
+    this.getActivities(this.date).subscribe(
+      data => {
+        const tempData = [];
+        let size = 0, key;
+        for (key in data) {
+          if (data.hasOwnProperty(key)) { size++; }
         }
+        console.log(size);
+        for (let i = size - 1; i > size - 7; i--) {
+          tempData.push(data[i]);
+        }
+        console.log(tempData);
+        this.activities = tempData;
+        console.log(this.activities[1]);
       }
     );
   }
+
+  public changeMonth(month: string) {
+    this.activities = null;
+    this.getActivities(month).subscribe(
+      data => {
+        this.activities = data;
+        console.log(data);
+      }
+    );
+  }
+
+  private getActivities(currentDate: string) {
+    return this.http.get('http://localhost:3000/activity?month=' + currentDate);
+}
 
   private getData() {
    return this.http.get('http://localhost:3000/table');
@@ -51,11 +78,13 @@ export class LineChartDemoComponent implements OnInit {
     return this.http.get('http://localhost:3000/month');
   }
 
-  public activity: Object;
+  public months: Object;
+  public user:string;
+  public activities: Object;
   public labels: Object;
   public users: Object;
   public lineChartData: Object;
-  public lineChartLabels = ['Septembre', 'Octobre'];
+  public lineChartLabels = ['Octobre'];
   public lineChartOptions: any = {
     responsive: true
   };
@@ -124,6 +153,7 @@ export class LineChartDemoComponent implements OnInit {
   public plusOne(id) {
     const value = id;
     const newData = this.lineChartData;
+    console.log(this.newReason);
     newData[value.substr(0, 1)]['data'][value.substr(1, 1)] = newData[value.substr(0, 1)]['data'][value.substr(1, 1)] + 1;
     return this.http.put('http://localhost:3000/table/' + value.substr(0, 1), newData[value.substr(0, 1)]).subscribe(
       res => {
@@ -207,20 +237,61 @@ export class LineChartDemoComponent implements OnInit {
     );
   }
 
-  public newReason: Object;
+  public newReason: string;
 
   public addReason(newReason) {
-    newReason = { 'name' : this.newReason };
-    console.log(newReason);
-    return this.http.post('http://localhost:3000/reasons', newReason).subscribe(
-      res => {
-        this.loadReasons();
-      }
-    );
+    this.newReason = newReason;
   }
 
   public loadActivity() {
     return this.http.get('http://localhost:3000/activity');
+  }
+  public act;
+
+  public setActivity(act: string) {
+    this.act = act;
+    console.log(this.act);
+  }
+
+  public setUser(user: string) {
+    this.user = user;
+    console.log(this.user);
+  }
+
+  public newAct: Object;
+
+  public newActivity() {
+    this.newAct = { 'type': this.act, 'author': this.user, 'reason' : this.newReason, 'month': this.date };
+    return this.http.post('http://localhost:3000/activity', this.newAct).subscribe(
+      res => {
+        this.getActivities(this.date).subscribe(
+          data => {
+            const tempData = [];
+            let size = 0, key;
+            for (key in data) {
+              if (data.hasOwnProperty(key)) { size++; }
+            }
+            console.log(size);
+            for (let i = size - 1; i > size - 7; i--) {
+              tempData.push(data[i]);
+            }
+            console.log(tempData);
+            this.activities = tempData;
+            console.log(this.activities[1]);
+          }
+        );
+      }
+    );
+  }
+  public allActivities: Object;
+
+  public getAllActivities() {
+    return this.http.get('http://localhost:3000/activity?month=' + this.date).subscribe(
+      data => {
+        this.allActivities = data;
+        console.log(this.allActivities);
+      }
+    );
   }
 
 }

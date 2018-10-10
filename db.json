@@ -3,15 +3,13 @@
     {
       "id": 0,
       "data": [
-        4,
-        1
+        0
       ],
       "label": "Jérôme: ménage"
     },
     {
       "id": 1,
       "data": [
-        0,
         0
       ],
       "label": "Jérôme: sexe"
@@ -19,32 +17,28 @@
     {
       "id": 2,
       "data": [
-        1,
-        5
+        0
       ],
       "label": "Jérôme: activités"
     },
     {
       "id": 3,
       "data": [
-        0,
-        9
+        0
       ],
       "label": "Sarah: ménage"
     },
     {
       "id": 4,
       "data": [
-        0,
-        8
+        0
       ],
       "label": "Sarah: sexe"
     },
     {
       "id": 5,
       "data": [
-        0,
-        8
+        0
       ],
       "label": "Sarah: activités"
     }
@@ -66,43 +60,59 @@
   "month": [
     {
       "id": 1,
-      "name": "Septembre"
+      "name": "Jan"
     },
     {
       "id": 2,
-      "name": "Octobre"
+      "name": "Feb"
+    },
+    {
+      "id": 3,
+      "name": "Mar"
+    },
+    {
+      "id": 4,
+      "name": "Apr"
+    },
+    {
+      "id": 5,
+      "name": "May"
+    },
+    {
+      "id": 6,
+      "name": "Jun"
+    },
+    {
+      "id": 7,
+      "name": "Jul"
+    },
+    {
+      "id": 8,
+      "name": "Aug"
+    },
+    {
+      "id": 9,
+      "name": "Sep"
+    },
+    {
+      "id": 10,
+      "name": "Oct"
+    },
+    {
+      "id": 11,
+      "name": "Nov"
+    },
+    {
+      "id": 12,
+      "name": "Dec"
     }
   ],
   "reasons": [
     {
       "id": 1,
       "name": "Linge rangé"
-    },
-    {
-      "name": "pomme de terre",
-      "id": 2
-    },
-    {
-      "name": "Bouton sur le cul",
-      "id": 3
-    },
-    {
-      "name": "Super bon rapport",
-      "id": 4
     }
   ],
   "activity": [
-    {
-      "id": 1,
-      "type": "+",
-      "author": "Sarah",
-      "reasonId": 1
-    },
-    {
-      "id": 2,
-      "type": "+",
-      "author": "Sarah",
-      "reasonId": 1
-    }
   ]
 }
